@@ -38,6 +38,7 @@
 
     <properties>
         <version.jbossas>6.0.0.Final</version.jbossas>
+        <dependencies.dir>${project.build.directory}/dependency</dependencies.dir>
         <stagging.dir>${project.build.directory}/staging</stagging.dir>
         <assembly.dir>${project.build.directory}/assembly</assembly.dir>
         <as.root.dir>jboss-${version.jbossas}</as.root.dir>
@@ -122,8 +123,6 @@
                         <phase>generate-sources</phase>
                         <configuration>
                             <tasks>
-
-                                <property name="dependencies.dir" value="target/dependency" />
 
                                 <!-- Create the staging and assembly dirs... -->
                                 <mkdir dir="${stagging.dir}" />
