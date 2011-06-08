@@ -18,12 +18,18 @@
  */
 package org.switchyard.test.ordersdemo;
 
+import org.apache.camel.Exchange;
+import org.custommonkey.xmlunit.XMLUnit;
 import org.jboss.arquillian.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.switchyard.test.ArquillianUtil;
+import org.switchyard.test.QuickstartInvoker;
+import org.xml.sax.SAXException;
+
+import java.io.IOException;
 
 /**
  *
@@ -38,7 +44,37 @@ public class OrdersDemoQuickstartTest {
     }
 
     @Test
-    public void test() {
-        System.out.println("*** Awesome !!!");
+    public void test() throws IOException, SAXException {
+        String response =
+                QuickstartInvoker.target("http4://localhost:18001/OrderService")
+                .setHeader(Exchange.CONTENT_TYPE, "text/xml")
+                .send(SOAP_REQUEST, String.class);
+
+        XMLUnit.setIgnoreWhitespace(true);
+        XMLUnit.compareXML(EXPECTED_SOAP_RESPONSE, response);
     }
+
+    private static final String SOAP_REQUEST = "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n" +
+            "    <soap:Body>\n" +
+            "        <orders:submitOrder xmlns:orders=\"urn:switchyard-quickstart-demo:orders:1.0\">\n" +
+            "            <order>\n" +
+            "                <orderId>PO-19838-XYZ</orderId>\n" +
+            "                <itemId>BUTTER</itemId>\n" +
+            "                <quantity>200</quantity>\n" +
+            "            </order>\n" +
+            "        </orders:submitOrder>\n" +
+            "    </soap:Body>\n" +
+            "</soap:Envelope>";
+
+    private static final String EXPECTED_SOAP_RESPONSE = "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\">\n" +
+            "    <SOAP-ENV:Body>\n" +
+            "        <orders:submitOrderResponse xmlns:orders=\"urn:switchyard-quickstart-demo:orders:1.0\">\n" +
+            "            <orderAck>\n" +
+            "                <orderId>PO-19838-XYZ</orderId>\n" +
+            "                <accepted>true</accepted>\n" +
+            "                <status>Order Accepted</status>\n" +
+            "            </orderAck>\n" +
+            "        </orders:submitOrderResponse>\n" +
+            "    </SOAP-ENV:Body>\n" +
+            "</SOAP-ENV:Envelope>";
 }

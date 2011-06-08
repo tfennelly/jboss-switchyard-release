@@ -39,6 +39,7 @@
     <properties>
         <switchyard.jboss.home>${project.build.directory}/switchyard-as6-0.1</switchyard.jboss.home>
         <arquillian.version>1.0.0.Alpha5</arquillian.version>
+        <version.camel>2.6.0</version.camel>
     </properties>
 
     <dependencies>
@@ -100,6 +101,14 @@
             <version>6.0.0.Final</version>
             <type>pom</type>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-http4</artifactId>
+            <version>${version.camel}</version>
+            <scope>test</scope>
+         </dependency>
+
     </dependencies>
     <dependencyManagement>
         <dependencies>
@@ -165,6 +174,7 @@
                 </executions>
             </plugin>
 
+            <!-- Configure the Surefire plugin for running the tests.  Be sure to make these same setting if running in your IDE... -->
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
