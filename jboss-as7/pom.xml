@@ -23,6 +23,19 @@
         <staging.jboss.dir>${staging.dir}/jboss-as-${version.jbossas}</staging.jboss.dir>
         <distro.root.dir>/switchyard-as7-${distro.version}/</distro.root.dir>
         <switchyard.jboss.home>${project.build.directory}${distro.root.dir}</switchyard.jboss.home>
+
+        <drools.version>5.2.0.Final</drools.version>
+        <antlr.version>3.3</antlr.version>
+        <ecj.version>3.5.1</ecj.version>
+        <mvel.version>2.1.0.drools2</mvel.version>
+        <jbpm.version>5.1.0.Final</jbpm.version>
+        <hibernate.core.version>3.3.2.GA</hibernate.core.version>
+        <hibernate.entitymanager.version>3.3.2.GA</hibernate.entitymanager.version>
+        <hibernate.annotations.version>3.3.1.GA</hibernate.annotations.version>
+        <hibernate.commons-annotations.version>3.1.0.GA</hibernate.commons-annotations.version>
+        <hibernate.ejb3-persistence.version>1.0.1.GA</hibernate.ejb3-persistence.version>
+        <hibernate.jpa.version>1.0</hibernate.jpa.version>
+        <mina.version>2.0.1</mina.version>
     </properties>
 
     <dependencies>
@@ -198,12 +211,6 @@
                                     <type>zip</type>
                                     <version>${project.version}</version>
                                 </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.switchyard.components</groupId>
-                                    <artifactId>switchyard-component-bpm</artifactId>
-                                    <type>zip</type>
-                                    <version>${project.version}</version>
-                                </artifactItem>
                             </artifactItems>
                             <outputDirectory>${staging.jboss.dir}</outputDirectory>
                         </configuration>
@@ -364,10 +371,63 @@
                 </dependencies>
                 -->
             </plugin>
+            <!--<plugin>-->
+                <!--<artifactId>maven-dependency-plugin</artifactId>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<id>unpack-jbpm-xsds</id>-->
+                        <!--<phase>generate-sources</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>unpack</goal>-->
+                        <!--</goals>-->
+                        <!--<configuration>-->
+                            <!--<artifactItems>-->
+                                <!--<artifactItem>-->
+                                    <!--<groupId>org.jbpm</groupId>-->
+                                    <!--<artifactId>jbpm-bpmn2</artifactId>-->
+                                    <!--<version>${jbpm.version}</version>-->
+                                    <!--<type>jar</type>-->
+                                <!--</artifactItem>-->
+                            <!--</artifactItems>-->
+                            <!--<includes>META-INF/*.xsd</includes>-->
+                            <!--<outputDirectory>${build.directory}/jbpm-xsds</outputDirectory>-->
+                        <!--</configuration>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+            <!--</plugin>-->
+            <plugin>
+                <groupId>org.switchyard</groupId>
+                <artifactId>maven-mergeassembly-plugin</artifactId>
+                <version>${project.version}</version>
+                <executions>
+                    <execution>
+                        <id>merge-assemblies</id>
+                        <phase>generate-sources</phase>
+                        <goals><goal>mergeassembly</goal></goals>
+                        <configuration>
+                            <baseAssembly>${basedir}/assembly.xml</baseAssembly>
+                            <finalAssembly>${basedir}/target/merged-assembly.xml</finalAssembly>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <executions>
+                    <!--<execution>-->
+                        <!--<id>make-jbpm-xsds-assembly</id>-->
+                        <!--<phase>generate-sources</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>attached</goal>-->
+                        <!--</goals>-->
+                        <!--<configuration>-->
+                            <!--<finalName>jbpm-bpmn2</finalName>-->
+                            <!--<descriptors>-->
+                                <!--<descriptor>${basedir}/build/components/bpm/jbpm-xsds-assembly.xml</descriptor>-->
+                            <!--</descriptors>-->
+                        <!--</configuration>-->
+                    <!--</execution>-->
                     <execution>
                         <id>make-assembly</id>
                         <phase>generate-test-resources</phase>
@@ -377,7 +437,7 @@
                         <configuration>
                             <finalName>SwitchYard-AS7-Standalone</finalName>
                             <descriptors>
-                                <descriptor>${basedir}/assembly.xml</descriptor>
+                                <descriptor>${basedir}/target/merged-assembly.xml</descriptor>
                             </descriptors>
                         </configuration>
                     </execution>

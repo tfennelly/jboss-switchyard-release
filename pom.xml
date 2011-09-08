@@ -23,6 +23,7 @@
     <modules>
         <module>testutil</module>
         <module>distribution</module>
+        <module>plugins/mergeassembly</module>
         <module>tests-as6</module>
         <module>tests-as7</module>
         <module>jboss-as6</module>
