@@ -9,16 +9,13 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.switchyard</groupId>
     <artifactId>switchyard-as7-standalone-parent</artifactId>
-    <version>0.3.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>SwitchYard: AS7 Standalone Parent</name>
     <description>SwitchYard AS7 Standalone Parent</description>
 
     <modules>
         <module>extension</module>
-        <module>build</module>
         <module>dist</module>
     </modules>
 

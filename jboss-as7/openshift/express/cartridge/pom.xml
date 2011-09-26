@@ -9,9 +9,7 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.switchyard</groupId>
     <artifactId>switchyard-release-openshift-express-cartridge</artifactId>
-    <version>0.3.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>SwitchYard: AS7 OpenShift Express Cartridge Modules</name>
     <description>SwitchYard AS7 OpenShift Express Cartridge Modules</description>
@@ -63,12 +61,6 @@
                                 <artifactItem>
                                     <groupId>org.switchyard.components</groupId>
                                     <artifactId>switchyard-component-rules</artifactId>
-                                    <type>zip</type>
-                                    <version>${project.version}</version>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.switchyard.components</groupId>
-                                    <artifactId>switchyard-component-bpm</artifactId>
                                     <type>zip</type>
                                     <version>${project.version}</version>
                                 </artifactItem>

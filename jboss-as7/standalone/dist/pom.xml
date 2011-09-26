@@ -10,9 +10,7 @@
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.switchyard</groupId>
     <artifactId>switchyard-release-as7</artifactId>
-    <version>0.3.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>SwitchYard: AS7 Distribution</name>
     <description>SwitchYard AS7 Distribution</description>
@@ -23,6 +21,19 @@
         <distro.root.dir>/switchyard-as7-${distro.version}/</distro.root.dir>
         <switchyard.jboss.home>${project.build.directory}${distro.root.dir}</switchyard.jboss.home>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.switchyard</groupId>
+            <artifactId>switchyard-release-distribution</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.as</groupId>
+            <artifactId>jboss-as-dist</artifactId>
+            <type>zip</type>
+            <version>${version.jbossas}</version>
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>
@@ -63,12 +74,6 @@
                                 </artifactItem>
                                 <artifactItem>
                                     <groupId>org.switchyard.components</groupId>
-                                    <artifactId>switchyard-component-bean</artifactId>
-                                    <type>zip</type>
-                                    <version>${project.version}</version>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.switchyard.components</groupId>
                                     <artifactId>switchyard-component-camel</artifactId>
                                     <type>zip</type>
                                     <version>${project.version}</version>
@@ -82,12 +87,6 @@
                                 <artifactItem>
                                     <groupId>org.switchyard.components</groupId>
                                     <artifactId>switchyard-component-rules</artifactId>
-                                    <type>zip</type>
-                                    <version>${project.version}</version>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.switchyard.components</groupId>
-                                    <artifactId>switchyard-component-bpm</artifactId>
                                     <type>zip</type>
                                     <version>${project.version}</version>
                                 </artifactItem>
@@ -271,12 +270,12 @@
                 </executions>
             </plugin>
             <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-deploy-plugin</artifactId>
-              <version>2.5</version>
-              <configuration>
-                <skip>false</skip>
-              </configuration>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>2.5</version>
+                <configuration>
+                    <skip>false</skip>
+                </configuration>
             </plugin>
 
             <!-- Configure the Surefire plugin for running the tests.  Be sure to make these same setting if running in your IDE... -->
